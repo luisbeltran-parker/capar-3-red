@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Capa 3 – Red (Modelo OSI)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070b1a;--bg2:#101a3a;--card:rgba(255,255,255,.06);--bd:rgba(255,255,255,.14);--tx:#eef3ff;--mut:#9db0d6;--a:#38bdf8;--b:#8b5cf6;--g:#34d399;--w:#fb923c;--r:#f43f5e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eef3fb;--bg2:#dbe6fa;--card:rgba(255,255,255,.75);--bd:rgba(20,33,61,.15);--tx:#0f1b3a;--mut:#4a5b7f;--a:#0284c7;--b:#6d3fe0;--g:#059669;--w:#d9600b}}
+*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--tx);background:radial-gradient(circle at 20% 10%,var(--bg2),var(--bg) 60%);display:flex;flex-direction:column}
+.blob{position:fixed;border-radius:50%;filter:blur(90px);opacity:.35;pointer-events:none;animation:fl 14s ease-in-out infinite alternate}
+.b1{width:340px;height:340px;background:var(--b);top:-80px;right:-60px}.b2{width:300px;height:300px;background:var(--a);bottom:40px;left:-80px;animation-delay:-6s}
+@keyframes fl{to{transform:translate(50px,40px) scale(1.2)}}
+#bar{height:4px;background:linear-gradient(90deg,var(--a),var(--b));width:0;transition:width .5s;z-index:3}
+.stage{flex:1;position:relative;overflow:hidden}
+.s{position:absolute;inset:0;overflow:auto;padding:28px clamp(16px,5vw,64px);opacity:0;pointer-events:none;transform:translateX(60px);transition:all .55s cubic-bezier(.2,.8,.2,1)}
+.s.on{opacity:1;pointer-events:auto;transform:none}.s.out{transform:translateX(-60px)}
+.in{max-width:1080px;margin:0 auto}
+.k{display:inline-block;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--a);font-weight:800;margin-bottom:6px}
+h1{font-size:clamp(34px,6.5vw,72px);line-height:1.02;margin:0 0 10px;font-weight:800;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(24px,4vw,40px);margin:0 0 16px;font-weight:800}
+.lead{color:var(--mut);font-size:clamp(1rem,1.7vw,1.2rem);margin:0 0 18px;max-width:720px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;backdrop-filter:blur(10px);transition:transform .25s,border-color .25s}
+.c:hover{transform:translateY(-4px);border-color:var(--a)}
+.c i{font-style:normal;font-size:1.6rem;display:block;margin-bottom:6px}.c b{display:block;margin-bottom:4px}.c p{margin:0;color:var(--mut);font-size:.92rem;line-height:1.45}
+.c.w{border-left:4px solid var(--w)}.c.g{border-left:4px solid var(--g)}.c.a{border-left:4px solid var(--a)}
+.s.on .r{animation:up .6s both;animation-delay:calc(var(--i)*70ms + 150ms)}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+svg{width:100%;height:auto;display:block}svg text{font-family:Inter,system-ui,sans-serif}
+.pill{display:inline-block;border:1px solid var(--bd);background:var(--card);border-radius:99px;padding:6px 14px;margin:0 8px 8px 0;font-size:.85rem;font-weight:600}
+.pill.hi{background:linear-gradient(90deg,var(--a),var(--b));color:#fff;border:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:center}
+.pro{margin-bottom:12px}.pro small{color:var(--mut)}.tk{height:14px;border-radius:9px;background:var(--card);overflow:hidden;margin-top:4px}
+.tk span{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--a),var(--b));width:0;transition:width 1.4s .4s}
+.s.on .tk span{width:var(--w2)}
+.fl{perspective:800px;cursor:pointer;min-height:130px}.fi{position:relative;height:100%;min-height:130px;transition:transform .6s;transform-style:preserve-3d}
+.fl.f .fi{transform:rotateY(180deg)}.fi>div{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:16px;border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;text-align:center}
+.fq{background:var(--card);font-weight:700}.fa{background:linear-gradient(135deg,var(--a),var(--b));color:#fff;transform:rotateY(180deg);font-size:.92rem}
+.quote{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.55;padding:20px 24px;border-radius:16px;background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--g);margin-bottom:22px}
+#ttl{font-size:2.2rem;font-weight:800;color:var(--w)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;z-index:3}
+button{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:9px 18px;font:600 .95rem Inter,system-ui,sans-serif;cursor:pointer;transition:.2s}
+button:hover:not(:disabled){background:linear-gradient(90deg,var(--a),var(--b));color:#fff}button:disabled{opacity:.35}
+#dots{display:flex;gap:7px}#dots i{width:9px;height:9px;border-radius:50%;background:var(--bd);cursor:pointer;transition:.3s}#dots i.on{background:var(--a);transform:scale(1.4)}
+.pulse{animation:pu 2s ease-out infinite;transform-box:fill-box;transform-origin:center}@keyframes pu{0%{transform:scale(.5);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+.gl{animation:gl 2.4s ease-in-out infinite}@keyframes gl{50%{filter:drop-shadow(0 0 10px #38bdf8)}}
+.dash{stroke-dasharray:7 7;animation:dh 1s linear infinite}@keyframes dh{to{stroke-dashoffset:-14}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="blob b1"></div><div class="blob b2"></div><div id="bar"></div>
+<div class="stage">
+
+<section class="s"><div class="in">
+<div class="r" style="--i:0"><span class="k">Modelo OSI · Capa 3</span><h1>Capa de Red</h1>
+<p class="lead">El "cerebro" del enrutamiento: lleva los datos de un origen a un destino a través de varias redes, eligiendo el mejor camino.</p></div>
+<div class="two">
+<svg class="r" style="--i:2" viewBox="0 0 360 290" aria-label="Pila OSI"><g font-size="14" font-weight="600" text-anchor="middle" fill="#fff">
+<rect x="10" y="8" width="340" height="32" rx="9" fill="#475580"/><text x="180" y="29">7 · Aplicación</text>
+<rect x="10" y="45" width="340" height="32" rx="9" fill="#475580"/><text x="180" y="66">6 · Presentación</text>
+<rect x="10" y="82" width="340" height="32" rx="9" fill="#475580"/><text x="180" y="103">5 · Sesión</text>
+<rect x="10" y="119" width="340" height="32" rx="9" fill="#5b6a98"/><text x="180" y="140">4 · Transporte — segmento</text>
+<g class="gl"><rect x="4" y="156" width="352" height="44" rx="11" fill="url(#gr)"/><text x="180" y="184" font-size="17" font-weight="800">3 · RED — paquete IP</text></g>
+<rect x="10" y="205" width="340" height="32" rx="9" fill="#5b6a98"/><text x="180" y="226">2 · Enlace — trama (MAC)</text>
+<rect x="10" y="242" width="340" height="32" rx="9" fill="#475580"/><text x="180" y="263">1 · Física — bits</text></g>
+<defs><linearGradient id="gr"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+<div class="grid" style="grid-template-columns:1fr">
+<div class="c a r" style="--i:3"><b>Capa 2 vs Capa 3</b><p>La capa 2 mueve datos <i style="display:inline;font-size:inherit">dentro</i> de una red local; la capa 3 los mueve <b style="display:inline">entre</b> redes.</p></div>
+<div class="c g r" style="--i:4"><b>Ficha rápida</b><p>PDU: paquete · Dirección: IP (lógica) · Dispositivos: router y switch capa 3 · Recibe segmentos y entrega a la capa 2.</p></div></div></div>
+</div></section>
+
+<section class="s"><div class="in">
+<div class="r" style="--i:0"><span class="k">Qué hace</span><h2>Funciones principales</h2></div>
+<div class="grid">
+<div class="c r" style="--i:1"><i>🏷️</i><b>Direccionamiento lógico</b><p>IP de origen y destino. IPv4: 32 bits · IPv6: 128 bits.</p></div>
+<div class="c r" style="--i:2"><i>🧭</i><b>Enrutamiento</b><p>Decide el camino usando tablas de enrutamiento.</p></div>
+<div class="c r" style="--i:3"><i>➡️</i><b>Reenvío</b><p>El router manda el paquete por la interfaz de salida correcta.</p></div>
+<div class="c r" style="--i:4"><i>✂️</i><b>Fragmentación</b><p>Divide paquetes que superan el MTU y los rearma en destino.</p></div>
+<div class="c r" style="--i:5"><i>🚦</i><b>Congestión y QoS</b><p>Prioriza tráfico importante y evita saturar nodos.</p></div>
+<div class="c r" style="--i:6"><i>📡</i><b>Diagnóstico (ICMP)</b><p>Ping y traceroute: errores y pruebas.</p></div></div>
+<svg class="r" style="--i:7;margin-top:18px" viewBox="0 0 760 150" font-size="14" font-weight="600" text-anchor="middle">
+<defs><linearGradient id="ln"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+<path id="rt" d="M110 75 C200 75 210 30 330 30 C450 30 470 75 560 75" fill="none" stroke="url(#ln)" stroke-width="4"/>
+<path d="M110 75 C200 75 210 125 330 125 C450 125 470 75 560 75" fill="none" stroke="#7684ab" stroke-width="2" class="dash"/>
+<rect x="20" y="52" width="92" height="46" rx="12" fill="#059669"/><text x="66" y="80" fill="#fff">Origen</text>
+<rect x="290" y="8" width="80" height="40" rx="10" fill="#0ea5e9"/><text x="330" y="33" fill="#fff">Router A</text>
+<rect x="290" y="105" width="80" height="40" rx="10" fill="#6b7aa8"/><text x="330" y="130" fill="#fff">Router B</text>
+<rect x="558" y="52" width="92" height="46" rx="12" fill="#059669"/><text x="604" y="80" fill="#fff">Destino</text>
+<text x="700" y="60" fill="#38bdf8" font-size="12">mejor ruta</text><text x="700" y="120" fill="#9db0d6" font-size="12">ruta alterna</text>
+<rect width="22" height="14" rx="4" x="-11" y="-7" fill="#fb923c"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#rt"/></animateMotion></rect></svg>
+</div></section>
+
+<section class="s"><div class="in">
+<div class="r" style="--i:0"><span class="k">Herramientas</span><h2>Protocolos de la capa 3</h2></div>
+<div class="grid">
+<div class="c a r" style="--i:1"><b>Direccionamiento</b><span class="pill hi">IPv4</span><span class="pill hi">IPv6</span><p>Identificar y transportar paquetes.</p></div>
+<div class="c a r" style="--i:2"><b>Control / diagnóstico</b><span class="pill">ICMP</span><span class="pill">ICMPv6</span><p>Mensajes de error, ping, traceroute.</p></div>
+<div class="c a r" style="--i:3"><b>Multicast</b><span class="pill">IGMP</span><p>Grupos de destinatarios.</p></div>
+<div class="c g r" style="--i:4"><b>Seguridad</b><span class="pill">IPsec</span><p>Cifrado y autenticación a nivel IP.</p></div>
+<div class="c w r" style="--i:5"><b>Enrutamiento interno (IGP)</b><span class="pill">RIP</span><span class="pill">OSPF</span><span class="pill">EIGRP</span><p>Rutas dentro de una organización.</p></div>
+<div class="c w r" style="--i:6"><b>Enrutamiento externo (EGP)</b><span class="pill">BGP</span><p>Rutas entre proveedores / Internet.</p></div>
+<div class="c r" style="--i:7"><b>Traducción</b><span class="pill">NAT</span><p>IP privadas ↔ públicas.</p></div></div>
+<div class="grid" style="margin-top:16px">
+<div class="c r" style="--i:8"><i>🔁</i><b>Vector distancia · RIP</b><p>Bellman-Ford. Cada router conoce la distancia según lo que dicen sus vecinos.</p></div>
+<div class="c r" style="--i:9"><i>🗺️</i><b>Estado de enlace · OSPF</b><p>Dijkstra. Cada router conoce el mapa completo y calcula el camino más corto.</p></div></div>
+</div></section>
+
+<section class="s"><div class="in">
+<div class="r" style="--i:0"><span class="k">Lo esencial</span><h2>Conceptos clave</h2></div>
+<svg class="r" style="--i:1" viewBox="0 0 760 100" font-size="13" font-weight="700" text-anchor="middle" fill="#fff">
+<rect x="4" y="8" width="112" height="40" rx="8" fill="#0ea5e9"/><text x="60" y="33">Versión</text>
+<rect x="120" y="8" width="130" height="40" rx="8" fill="#0ea5e9"/><text x="185" y="33">Long. cabecera</text>
+<rect x="254" y="8" width="100" height="40" rx="8" fill="#fb923c" class="gl"/><text x="304" y="33">TTL</text>
+<rect x="358" y="8" width="110" height="40" rx="8" fill="#8b5cf6"/><text x="413" y="33">Protocolo</text>
+<rect x="472" y="8" width="140" height="40" rx="8" fill="#059669"/><text x="542" y="33">IP origen</text>
+<rect x="616" y="8" width="140" height="40" rx="8" fill="#059669"/><text x="686" y="33">IP destino</text>
+<text x="380" y="80" font-weight="400" fill="#9db0d6">Cabecera IPv4 · además: flags y offset de fragmentación</text></svg>
+<div class="grid" style="margin-top:14px">
+<div class="c w r" style="--i:2"><b>TTL — tiempo de vida</b><p>Baja 1 en cada router; al llegar a 0 se descarta (evita bucles).</p><div id="ttl">TTL: 4</div></div>
+<div class="c r" style="--i:3"><i>📋</i><b>Tabla de enrutamiento</b><p>Red destino · máscara · siguiente salto · interfaz de salida · métrica.</p></div>
+<div class="c r" style="--i:4"><i>⚙️</i><b>Estático vs dinámico</b><p>Estático: a mano, no se adapta. Dinámico: los routers aprenden y actualizan solos.</p></div>
+<div class="c r" style="--i:5"><i>🧩</i><b>Subredes</b><p>Dividir una red grande en pequeñas. Ej.: /24 = 255.255.255.0</p></div></div>
+<div class="c r" style="--i:6;margin-top:14px"><b>IPv4 vs IPv6</b>
+<div class="pro"><small>IPv4 · 32 bits · ~4,3 mil millones de direcciones · manual/DHCP · IPsec opcional</small><div class="tk"><span style="--w2:25%"></span></div></div>
+<div class="pro"><small>IPv6 · 128 bits · prácticamente ilimitadas · autoconfiguración · IPsec integrado</small><div class="tk"><span style="--w2:100%"></span></div></div></div>
+</div></section>
+
+<section class="s"><div class="in">
+<div class="r" style="--i:0"><span class="k">Caso de estudio</span><h2>Vehículos autónomos en una ciudad inteligente</h2></div>
+<svg class="r" style="--i:1" viewBox="0 0 760 270" font-size="13" font-weight="700" text-anchor="middle">
+<defs><path id="rd" d="M40 214H720"/></defs>
+<rect x="0" y="198" width="760" height="40" rx="8" fill="#334166" opacity=".7"/><path d="M0 218H760" stroke="#9db0d6" stroke-width="2" stroke-dasharray="14 12"/>
+<ellipse cx="380" cy="34" rx="88" ry="26" fill="#8b5cf6"/><text x="380" y="39" fill="#fff">Nube · V2N</text>
+<line x1="380" y1="60" x2="380" y2="120" stroke="#8b5cf6" stroke-width="3" class="dash"/>
+<rect x="345" y="120" width="70" height="56" rx="10" fill="#059669"/><text x="380" y="153" fill="#fff">RSU</text>
+<circle cx="380" cy="120" r="14" fill="none" stroke="#34d399" stroke-width="3" class="pulse"/>
+<line x1="345" y1="150" x2="150" y2="200" stroke="#38bdf8" stroke-width="3" class="dash"/><line x1="415" y1="150" x2="610" y2="200" stroke="#38bdf8" stroke-width="3" class="dash"/>
+<text x="230" y="150" fill="#38bdf8">V2I</text><text x="530" y="150" fill="#38bdf8">V2I</text>
+<g><rect x="-30" y="-12" width="60" height="24" rx="8" fill="#fb923c"/><text y="5" fill="#fff" font-size="11">Auto 1</text><animateMotion dur="9s" repeatCount="indefinite" begin="-2s"><mpath href="#rd"/></animateMotion></g>
+<g><rect x="-30" y="-12" width="60" height="24" rx="8" fill="#f43f5e"/><text y="5" fill="#fff" font-size="11">Auto 2</text><animateMotion dur="9s" repeatCount="indefinite" begin="-3.4s"><mpath href="#rd"/></animateMotion></g>
+<g><rect x="-30" y="-12" width="60" height="24" rx="8" fill="#fb923c"/><text y="5" fill="#fff" font-size="11">Auto 3</text><animateMotion dur="9s" repeatCount="indefinite" begin="-6s"><mpath href="#rd"/></animateMotion></g>
+<text x="290" y="250" fill="#f43f5e">⚠ frenada de emergencia · V2V</text>
+<circle cx="716" cy="180" r="9" fill="#eef3ff"/><text x="716" y="164" fill="#9db0d6" font-size="12">V2P</text></svg>
+<p class="lead r" style="--i:2">Todo viaja en paquetes IP y la topología cambia en segundos. Un mensaje de frenada tardío puede causar un accidente.</p>
+<div class="grid">
+<div class="c w r" style="--i:3"><b>Rutas cambiantes y pérdida de rutas</b><p>Alta velocidad, enlaces inestables: el siguiente salto desaparece.</p></div>
+<div class="c w r" style="--i:4"><b>Congestión en RSU</b><p>Muchos vehículos concentrados en un mismo cruce.</p></div>
+<div class="c w r" style="--i:5"><b>Latencia alta</b><p>Rutas largas o recálculo constante.</p></div>
+<div class="c w r" style="--i:6"><b>Handover</b><p>Al pasar de una RSU a otra cambia la IP o el punto de acceso.</p></div>
+<div class="c w r" style="--i:7"><b>Pérdida de paquetes</b><p>Enlaces intermitentes y saturación.</p></div></div>
+</div></section>
+
+<section class="s"><div class="in">
+<div class="r" style="--i:0"><span class="k">Propuesta</span><h2>Soluciones</h2></div>
+<div class="grid">
+<div class="c g r" style="--i:1"><i>🔎</i><b>AODV</b><p>Bajo demanda: crea la ruta solo cuando se necesita.</p></div>
+<div class="c g r" style="--i:2"><i>🔄</i><b>OLSR</b><p>Proactivo: mantiene las rutas siempre actualizadas.</p></div>
+<div class="c g r" style="--i:3"><i>📍</i><b>GPSR</b><p>Geográfico: el siguiente salto según el GPS del vecino más cercano al destino.</p></div>
+<div class="c g r" style="--i:4"><i>🎛️</i><b>SDN</b><p>Controlador central que ve toda la red y recalcula rutas en tiempo real.</p></div>
+<div class="c g r" style="--i:5"><i>🔀</i><b>Multipath + balanceo</b><p>Rutas alternas y reparto de carga: si una falla, otra toma el control.</p></div>
+<div class="c g r" style="--i:6"><i>🚨</i><b>QoS</b><p>Los mensajes de seguridad van antes que el entretenimiento.</p></div>
+<div class="c g r" style="--i:7"><i>🌐</i><b>IPv6 / Mobile IPv6</b><p>Una IP por dispositivo y mejor manejo de movilidad.</p></div>
+<div class="c g r" style="--i:8"><i>⚡</i><b>Edge + 5G</b><p>Procesar en la RSU reduce la latencia.</p></div>
+<div class="c g r" style="--i:9"><i>🛡️</i><b>ICMP + IPsec</b><p>Detectar rutas caídas y medir latencia; evitar falsificación de rutas.</p></div></div>
+<div class="r" style="--i:10;margin-top:16px"><span class="pill hi">IEEE 802.11p / WAVE</span><span class="pill hi">C-V2X</span><span class="pill hi">ETSI GeoNetworking</span></div>
+</div></section>
+
+<section class="s"><div class="in">
+<div class="r" style="--i:0"><span class="k">Cierre</span><h2>Conclusión</h2></div>
+<div class="quote r" style="--i:1">La Capa 3 es el cerebro del enrutamiento: decide por dónde viajan los datos. En una ciudad inteligente su reto es adaptarse a una topología que cambia constantemente. Con protocolos dinámicos, enrutamiento geográfico, SDN, IPv6 y QoS, la información crítica llega rápido y de forma confiable.</div>
+<div class="r" style="--i:2"><span class="k">Preguntas frecuentes · toca para ver la respuesta</span></div>
+<div class="grid" style="margin-top:8px">
+<div class="fl r" style="--i:3"><div class="fi"><div class="fq">¿Router vs switch?</div><div class="fa">Router: capa 3, usa IP y conecta redes distintas. Switch: capa 2, usa MAC dentro de una red.</div></div></div>
+<div class="fl r" style="--i:4"><div class="fi"><div class="fq">¿IP vs MAC?</div><div class="fa">IP: lógica, cambia según la red. MAC: física, viene en la tarjeta de red.</div></div></div>
+<div class="fl r" style="--i:5"><div class="fi"><div class="fq">¿Por qué no basta el enrutamiento estático?</div><div class="fa">La topología cambia todo el tiempo y no se puede configurar a mano.</div></div></div>
+<div class="fl r" style="--i:6"><div class="fi"><div class="fq">¿Qué es el TTL?</div><div class="fa">Contador que evita que un paquete circule para siempre.</div></div></div>
+<div class="fl r" style="--i:7"><div class="fi"><div class="fq">¿Qué es OSPF?</div><div class="fa">Protocolo de estado de enlace: usa Dijkstra para hallar el camino más corto.</div></div></div>
+<div class="fl r" style="--i:8"><div class="fi"><div class="fq">¿Y si se pierde una ruta?</div><div class="fa">Se detecta el fallo, se recalcula y se usa una ruta alterna.</div></div></div></div>
+</div></section>
+
+</div>
+<nav><button id="p">← Anterior</button><div id="dots"></div><div><button id="fs" title="Pantalla completa">⛶</button> <button id="x">Siguiente →</button></div></nav>
+<script>
+var s=[].slice.call(document.querySelectorAll('.s')),i=0,d=document.getElementById('dots');
+s.forEach(function(_,j){var e=document.createElement('i');e.onclick=function(){go(j)};d.appendChild(e)});
+function go(k){k=Math.max(0,Math.min(s.length-1,k));s.forEach(function(e,j){e.classList.toggle('on',j==k);e.classList.toggle('out',j<k)});i=k;
+[].forEach.call(d.children,function(e,j){e.classList.toggle('on',j==k)});
+document.getElementById('bar').style.width=((k+1)/s.length*100)+'%';
+document.getElementById('p').disabled=k==0;document.getElementById('x').disabled=k==s.length-1;s[k].scrollTop=0}
+document.getElementById('p').onclick=function(){go(i-1)};document.getElementById('x').onclick=function(){go(i+1)};
+document.getElementById('fs').onclick=function(){try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
+document.addEventListener('keydown',function(e){if(e.key=='ArrowRight'||e.key==' ')go(i+1);if(e.key=='ArrowLeft')go(i-1)});
+[].forEach.call(document.querySelectorAll('.fl'),function(e){e.onclick=function(){e.classList.toggle('f')}});
+var t=4,el=document.getElementById('ttl');setInterval(function(){t=t>0?t-1:4;el.textContent=t?'TTL: '+t:'TTL: 0 → descartado'},1100);
+go(0);
+</script></body></html>
